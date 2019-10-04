@@ -54,9 +54,12 @@ def pw_dist(a, b, da):
     da.append(dst)
     return da
 
-def convex_hull(points):
+def convex_hull(i, points):
     polygon = Polygon(points)
     convex_hull_4326 = polygon.convex_hull
+    chull_polygon = open("/home/olivera/Documents/data/chull_polygons/chull_poly_" + str(i) + ".txt", 'w')
+    chull_polygon.write(convex_hull_4326.to_wkt())
+    chull_polygon.close()
     #print(convex_hull_4326.wkt)
 
     project = partial(
@@ -104,7 +107,7 @@ def adgc(i):
     avg = np.mean(dist_array)
     diameter = np.max(dist_array)
     gyration = np.std(dist_array)
-    chull = convex_hull(points)
+    chull = convex_hull(i, points)
     chull_area = chull[0]/1000000
     chull_perimetar = chull[1]/1000
 
